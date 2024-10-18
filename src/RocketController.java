@@ -1,4 +1,3 @@
-// Контроллер
 public class RocketController implements RocketControl {
     private RocketModel model;
 
