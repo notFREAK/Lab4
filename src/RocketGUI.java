@@ -147,7 +147,7 @@ public class RocketGUI extends JFrame implements RocketObserver {
                 double thrust = fuelMasses[i] * thrustPerKgFuel ;
 
                 if (thrust / remainingMass <= 10) {
-                    statusLabel.setText("Error: Тяга ступени " + (i + 1) + " слишком низкая!");
+                    statusLabel.setText("Error: Тяга ступени " + (i + 1) + " слишком низкая! (Добавьте топлива или тягу)");
                     return false;
                 }
             }
