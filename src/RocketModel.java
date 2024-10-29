@@ -18,6 +18,7 @@ public class RocketModel {
     private double altitude;
     private int remainingStages;
 
+    private int millsDelay = 100;
     private List<RocketObserver> observers = new ArrayList<>();
     private boolean running = false;
 
@@ -29,7 +30,7 @@ public class RocketModel {
                 notifyObservers();
 
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(millsDelay);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -49,9 +50,13 @@ public class RocketModel {
 
         int currentStage = remainingStages - 1;
 
-        double thrust = fuelMasses[currentStage] * thrustPerKgFuel;
-
         double fuelConsumption = 0.01;
+
+        double deltaTime = millsDelay * 0.001;
+
+        double thrust = fuelConsumption/deltaTime  * thrustPerKgFuel;
+
+
         fuelMasses[currentStage] -= fuelConsumption;
 
         if (fuelMasses[currentStage] <= 0) {
@@ -70,7 +75,6 @@ public class RocketModel {
         // Ускорение (по второму закону Ньютона: a = F / m - g)
         double acceleration = thrust / currentMass - gravity;
 
-        double deltaTime = 0.1;
 
         // Обновляем скорость и высоту (интегрируем ускорение и скорость по времени)
         speed += acceleration * deltaTime;

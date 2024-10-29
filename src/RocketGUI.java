@@ -66,7 +66,7 @@ public class RocketGUI extends JFrame implements RocketObserver {
             inputPanel.add(fuelMassFields[i]);
         }
 
-        thrustField = new JTextField("150");
+        thrustField = new JTextField("3500");
         inputPanel.add(new JLabel("Тяга на кг топлива:"));
         inputPanel.add(thrustField);
 
@@ -144,7 +144,7 @@ public class RocketGUI extends JFrame implements RocketObserver {
                 for (int j = i; j < 3; j++) {
                     remainingMass += stageMasses[j] + fuelMasses[j];
                 }
-                double thrust = fuelMasses[i] * thrustPerKgFuel ;
+                double thrust = 0.1 * thrustPerKgFuel ;
 
                 if (thrust / remainingMass <= 10) {
                     statusLabel.setText("Error: Тяга ступени " + (i + 1) + " слишком низкая! (Добавьте топлива или тягу)");
