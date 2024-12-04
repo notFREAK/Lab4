@@ -13,6 +13,7 @@ public class RocketModel {
     private double[] initialFuelMasses;
     private double thrustPerKgFuel;
 
+
     private double currentMass;
     private double speed;
     private double altitude;
@@ -21,6 +22,8 @@ public class RocketModel {
     private int millsDelay = 100;
     private List<RocketObserver> observers = new ArrayList<>();
     private boolean running = false;
+    private double fuelConsumption = 0.01;
+    private double deltaTime = millsDelay * 0.001;
 
     public void startSimulation() {
         new Thread(() -> {
@@ -50,12 +53,7 @@ public class RocketModel {
 
         int currentStage = remainingStages - 1;
 
-        double fuelConsumption = 0.01;
-
-        double deltaTime = millsDelay * 0.001;
-
         double thrust = fuelConsumption/deltaTime  * thrustPerKgFuel;
-
 
         fuelMasses[currentStage] -= fuelConsumption;
 
@@ -72,7 +70,8 @@ public class RocketModel {
 
         double gravity = calculateGravity(altitude);
 
-        // Ускорение (по второму закону Ньютона: a = F / m - g)
+        // Ускорение ракеты по уравнению Мещерского
+        // a = F / m - g
         double acceleration = thrust / currentMass - gravity;
 
 
@@ -92,8 +91,6 @@ public class RocketModel {
         currentMass = payloadMass;
 
         double gravity = calculateGravity(altitude);
-
-        double deltaTime = 0.1;
 
         double acceleration = -gravity;
 
